@@ -2,16 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InputHandler : MonoBehaviour {
+public class InputController : MonoBehaviour
+{
     private Vector3 fp;   //First touch position
     private Vector3 lp;   //Last touch position
     private float dragDistance;  //minimum distance for a swipe to be registered
-    private Egg egg;
 
-    public void Init(Egg egg)
-    {
-        this.egg = egg;
-    }
+    [SerializeField]
+    private Egg egg;
 
     public void Update()
     {

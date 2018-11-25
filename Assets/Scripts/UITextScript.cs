@@ -11,6 +11,12 @@ public class UITextScript : MonoBehaviour {
     [SerializeField]
     private Button resetButton;
 
+    [SerializeField]
+    private Image LevelCompletePanel;
+    
+    [SerializeField]
+    private Button restartButton;
+
     private Egg egg;
 
     // Use this for initialization
@@ -21,9 +27,10 @@ public class UITextScript : MonoBehaviour {
     }
 	void Start ()
     {
+        LevelCompletePanel.gameObject.SetActive(false);
         resetButton.onClick.AddListener(ResetPlayer);
-        healthText.text = "Health: " + egg.health;
-	}
+        restartButton.onClick.AddListener(RestartPlayer);
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -31,7 +38,7 @@ public class UITextScript : MonoBehaviour {
         healthText.text = "Health: " + egg.health;
         if (egg.gameWon)
         {
-            //Game won
+           LevelComplete();
         }
     }
 
@@ -39,4 +46,17 @@ public class UITextScript : MonoBehaviour {
     {
         egg.Reset();
     }
+
+    void RestartPlayer()
+    {
+        LevelCompletePanel.gameObject.SetActive(false);
+        egg.Reset();
+    }
+
+    void LevelComplete()
+    {
+        LevelCompletePanel.gameObject.SetActive(true);
+    }
 }
+
+

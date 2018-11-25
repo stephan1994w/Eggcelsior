@@ -30,6 +30,7 @@ public class Egg : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+
     }
 
     public void Up()

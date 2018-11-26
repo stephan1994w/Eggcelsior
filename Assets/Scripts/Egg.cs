@@ -20,6 +20,7 @@ public class Egg : MonoBehaviour
     private List<GameObject> yokes = new List<GameObject>();
     private List<Transform> winColliders;
     public bool gameWon = false;
+    public bool accelEnabled = true;
 
     public void Init(List<Transform> winColliders)
     {
@@ -33,9 +34,9 @@ public class Egg : MonoBehaviour
 
     }
 
-    public void Up()
+    public void Up(float multiplier)
     {
-        FlickEgg(rb, new Vector3(0, FORCE / 2, FORCE / 2));
+        FlickEgg(rb, new Vector3(0, FORCE / 2, FORCE / 2 * multiplier));
     }
 
     public void Down()
@@ -43,14 +44,14 @@ public class Egg : MonoBehaviour
         //Do Nothing
     }
 
-    public void Left()
+    public void Left(float multiplier)
     {
-        FlickEgg(rb, new Vector3(-FORCE, 0, 0));
+        FlickEgg(rb, new Vector3(-FORCE * multiplier, 0, 0));
     }
 
-    public void Right()
+    public void Right(float multiplier)
     {
-        FlickEgg(rb, new Vector3(FORCE, 0, 0));
+        FlickEgg(rb, new Vector3(FORCE * multiplier, 0, 0));
     }
 
     private void FlickEgg(Rigidbody rb, Vector3 forceDirection)
@@ -66,16 +67,15 @@ public class Egg : MonoBehaviour
 
     void FixedUpdate()
     {
-        GetComponent<Rigidbody>().velocity = GetComponent<Rigidbody>().velocity * (1 + (MomentumIncrease/100));
         //Left
         if (Input.GetKeyUp(KeyCode.A))
-            Left();
+            Left(1);
         //Right
         if (Input.GetKeyUp(KeyCode.D))
-            Right();
+            Right(1);
         //Up
         if (Input.GetKeyUp(KeyCode.W))
-            Up();
+            Up(1);
     }
 
     private void Win()
@@ -95,7 +95,6 @@ public class Egg : MonoBehaviour
                 return;
             }
         }   
-        Debug.Log("Impact force is: " + collision.impulse.magnitude);
         if (collision.impulse.magnitude > SPLAT_FORCE)
         {
             Splat();
@@ -123,7 +122,7 @@ public class Egg : MonoBehaviour
         //TODO: Delete the yokes but for now they're cool to leave
         splat = false;
         gameWon = false;
-        transform.position = Vector3.zero;
+        transform.position = new Vector3(0,6,4);
         transform.rotation = new Quaternion(0, 0, 0, 1);
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;

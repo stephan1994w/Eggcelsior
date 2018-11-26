@@ -7,9 +7,15 @@ public class UITextScript : MonoBehaviour {
 
     [SerializeField]
     private Text healthText;
+    [SerializeField]
+    private Text speedText;
+    [SerializeField]
+    private Text accelText;
 
     [SerializeField]
     private Button resetButton;
+    [SerializeField]
+    private Button accelButton;
 
     [SerializeField]
     private Image LevelCompletePanel;
@@ -29,6 +35,8 @@ public class UITextScript : MonoBehaviour {
     {
         LevelCompletePanel.gameObject.SetActive(false);
         resetButton.onClick.AddListener(ResetPlayer);
+        accelButton.onClick.AddListener(toggleAccelerometer);
+        restartButton.onClick.AddListener(RestartPlayer);
         restartButton.onClick.AddListener(RestartPlayer);
     }
 	
@@ -36,6 +44,9 @@ public class UITextScript : MonoBehaviour {
 	void Update ()
     {
         healthText.text = "Health: " + egg.health;
+        speedText.text = "Speed: " + System.Math.Round(egg.GetComponent<Rigidbody>().velocity.magnitude, 0);
+        accelText.text = "Accelerometer: " + egg.accelEnabled;
+
         if (egg.gameWon)
         {
            LevelComplete();
@@ -56,6 +67,11 @@ public class UITextScript : MonoBehaviour {
     void LevelComplete()
     {
         LevelCompletePanel.gameObject.SetActive(true);
+    }
+
+    void toggleAccelerometer()
+    {
+        egg.accelEnabled = !egg.accelEnabled;
     }
 }
 

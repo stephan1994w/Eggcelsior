@@ -868,7 +868,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83aecc0ae6e7c094ca0c7b7a01709d6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1221449669}
+  player: {fileID: 1303928842}
+  offset: {x: 0, y: 0, z: 0}
+  SmoothFactor: 0.5
 --- !u!1 &564834183
 GameObject:
   m_ObjectHideFlags: 0
@@ -2034,6 +2036,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthText: {fileID: 997222369}
+  speedText: {fileID: 0}
   resetButton: {fileID: 1222730421}
   LevelCompletePanel: {fileID: 1369844463}
   restartButton: {fileID: 2051770100}
@@ -2142,6 +2145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da2b1d4b10555df4bb0f57370aebb908, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  egg: {fileID: 1303928845}
 --- !u!4 &1651231995
 Transform:
   m_ObjectHideFlags: 0

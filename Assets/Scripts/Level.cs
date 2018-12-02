@@ -20,6 +20,8 @@ public class Level : MonoBehaviour {
         egg.Init(winColliders);
         textScript.Init(egg);
 
+
+
     }
 	
 	// Update is called once per frame

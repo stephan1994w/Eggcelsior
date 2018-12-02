@@ -2,20 +2,36 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InputHandler : MonoBehaviour {
+public class InputController : MonoBehaviour
+{
     private Vector3 fp;   //First touch position
     private Vector3 lp;   //Last touch position
     private float dragDistance;  //minimum distance for a swipe to be registered
+
+    [SerializeField]
     private Egg egg;
 
-    public void Init(Egg egg)
+    public void FixedUpdate()
     {
-        this.egg = egg;
-    }
-
-    public void Update()
-    {
+        //Swipe Detection
         DetectSwipe();
+
+        //Accelerometer Detection
+        if(egg.accelEnabled)
+        {
+            Vector3 acc = Input.acceleration;
+            egg.GetComponent<Rigidbody>().AddForce(acc.x * 20f, 0, 0);
+        }
+
+        //Left
+        if (Input.GetKeyUp(KeyCode.A))
+            egg.Left(1);
+        //Right
+        if (Input.GetKeyUp(KeyCode.D))
+            egg.Right(1);
+        //Up
+        if (Input.GetKeyUp(KeyCode.W))
+            egg.Up(1);
     }
     void DetectSwipe()
     {
@@ -43,12 +59,12 @@ public class InputHandler : MonoBehaviour {
                     {   //If the horizontal movement is greater than the vertical movement...
                         if ((lp.x > fp.x))  //If the movement was to the right)
                         {
-                            egg.Right();
+                            egg.Right(1);
                             //Debug.Log("Right Swipe");
                         }
                         else
                         {
-                            egg.Left();
+                            egg.Left(1);
                             //Debug.Log("Left Swipe");
                         }
                     }
@@ -56,7 +72,7 @@ public class InputHandler : MonoBehaviour {
                     {   //the vertical movement is greater than the horizontal movement
                         if (lp.y > fp.y)  //If the movement was up
                         {   //Up swipe
-                            egg.Up();
+                            egg.Up(1.5f);
                         }
                         else
                         {   //Down swipe

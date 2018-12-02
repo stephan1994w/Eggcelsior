@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InputController : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class InputController : MonoBehaviour
 
     [SerializeField]
     private Egg egg;
+    [SerializeField]
+    private int multiplier = 1;
 
     public void FixedUpdate()
     {
@@ -25,14 +28,32 @@ public class InputController : MonoBehaviour
 
         //Left
         if (Input.GetKeyUp(KeyCode.A))
-            egg.Left(1);
+            egg.Left(multiplier);
         //Right
         if (Input.GetKeyUp(KeyCode.D))
-            egg.Right(1);
+            egg.Right(multiplier);
         //Up
         if (Input.GetKeyUp(KeyCode.W))
-            egg.Up(1);
+            egg.Up(multiplier);
     }
+
+    public void changeSpeed(Dropdown change)
+    {
+        egg.FORCE = (change.value + 1) * 100;
+       // multiplier = (change.value + 1) * 100;
+    }
+    public void changeInputType(Dropdown change)
+    {
+        egg.changeInputType(change);
+        if (change.value == 3)
+        {
+            egg.accelEnabled = true;
+        } else
+        {
+            egg.accelEnabled = false;
+        }
+    }
+
     void DetectSwipe()
     {
         if (Input.touchCount == 1) // user is touching the screen with a single touch

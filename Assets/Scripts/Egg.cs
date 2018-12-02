@@ -1,13 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Egg : MonoBehaviour
 {
     [SerializeField]
     private float MomentumIncrease = 10;
     [SerializeField]
-    private float FORCE = 100f;
+    public float FORCE = 100f;
     public int health = 100;
     [SerializeField]
     float FlickIntervalInSeconds = 5f;
@@ -20,6 +21,9 @@ public class Egg : MonoBehaviour
     private List<GameObject> yokes = new List<GameObject>();
     private List<Transform> winColliders;
     public bool gameWon = false;
+
+    // 1 Is roll
+    int inputType = 0;
     public bool accelEnabled = true;
 
     public void Init(List<Transform> winColliders)
@@ -36,7 +40,10 @@ public class Egg : MonoBehaviour
 
     public void Up(float multiplier)
     {
-        FlickEgg(rb, new Vector3(0, FORCE / 2, FORCE / 2 * multiplier));
+        if (inputType == 1)
+            FlickEgg(rb, new Vector3(0, 0, FORCE / 2 * multiplier));
+        else
+            FlickEgg(rb, new Vector3(0, FORCE / 2, FORCE / 2 * multiplier));
     }
 
     public void Down()
@@ -46,12 +53,34 @@ public class Egg : MonoBehaviour
 
     public void Left(float multiplier)
     {
-        FlickEgg(rb, new Vector3(-FORCE * multiplier, 0, 0));
+        if (inputType == 1)
+            RotateEgg(rb, new Vector3(0, 0, FORCE * multiplier));
+        else
+            FlickEgg(rb, new Vector3(-FORCE * multiplier, 0, 0));
     }
 
     public void Right(float multiplier)
     {
-        FlickEgg(rb, new Vector3(FORCE * multiplier, 0, 0));
+        if (inputType == 1)
+            RotateEgg(rb, new Vector3(0, 0, -FORCE * multiplier));
+        else
+            FlickEgg(rb, new Vector3(FORCE * multiplier, 0, 0));
+    }
+
+    public void changeInputType(Dropdown change)
+    {
+        inputType = change.value;
+    }
+
+    private void RotateEgg(Rigidbody rb, Vector3 forceDirection)
+    {
+        var currentTime = Time.time;
+        var timeSinceLastFlick = currentTime - timeOfLastFlick;
+        if (timeSinceLastFlick > FlickIntervalInSeconds || timeOfLastFlick == 0.0f)
+        {
+            rb.AddTorque(forceDirection);
+            timeOfLastFlick = currentTime;
+        }
     }
 
     private void FlickEgg(Rigidbody rb, Vector3 forceDirection)

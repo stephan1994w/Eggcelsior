@@ -3632,6 +3632,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1651231995}
   - component: {fileID: 1651231994}
+  - component: {fileID: 1651231996}
   m_Layer: 0
   m_Name: InputController
   m_TagString: Untagged
@@ -3652,6 +3653,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   egg: {fileID: 1303928845}
   multiplier: 1
+  swipe: {fileID: 1651231996}
 --- !u!4 &1651231995
 Transform:
   m_ObjectHideFlags: 0
@@ -3665,6 +3667,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1651231996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1651231993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a35beaf472b17f4cbe0f2fccf96e4ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1660036995
 GameObject:
   m_ObjectHideFlags: 0

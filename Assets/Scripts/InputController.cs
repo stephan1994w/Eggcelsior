@@ -13,14 +13,21 @@ public class InputController : MonoBehaviour
     private Egg egg;
     [SerializeField]
     private int multiplier = 1;
+    public Swipe swipe;
 
     public void FixedUpdate()
     {
         //Swipe Detection
-        DetectSwipe();
+        // DetectSwipe();
+        if (swipe.SwipeLeft)
+            egg.Left(multiplier);
+        if (swipe.SwipeRight)
+            egg.Right(multiplier);
+        if (swipe.SwipeUp)
+            egg.Up(multiplier);
 
         //Accelerometer Detection
-        if(egg.accelEnabled)
+        if (egg.accelEnabled)
         {
             Vector3 acc = Input.acceleration;
             egg.GetComponent<Rigidbody>().AddForce(acc.x * 20f, 0, 0);
@@ -45,7 +52,7 @@ public class InputController : MonoBehaviour
     public void changeInputType(Dropdown change)
     {
         egg.changeInputType(change);
-        if (change.value == 3)
+        if (change.value == 2)
         {
             egg.accelEnabled = true;
         } else

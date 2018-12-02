@@ -1,13 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Egg : MonoBehaviour
 {
     [SerializeField]
     private float MomentumIncrease = 10;
     [SerializeField]
-    private float FORCE = 100f;
+    private float FORCE = 100;
     public int health = 100;
     [SerializeField]
     float FlickIntervalInSeconds = 5f;
@@ -21,6 +22,15 @@ public class Egg : MonoBehaviour
     private List<Transform> winColliders;
     public bool gameWon = false;
 
+    // Controls
+    Gyroscope gyro;
+
+    public Swipe swipe;
+
+
+
+    // 0 = forces, 1 = rotation, 2= gyro
+    int inputType = 0;
     public void Init(List<Transform> winColliders)
     {
         this.winColliders = winColliders;
@@ -30,11 +40,20 @@ public class Egg : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        gyro = Input.gyro;
     }
 
     public void Up()
     {
-        FlickEgg(rb, new Vector3(0, FORCE / 2, FORCE / 2));
+        if (inputType == 0)
+        {
+            FlickEgg(rb, new Vector3(0, FORCE / 2, FORCE / 2));
+        }
+        else
+        {
+            FlickEgg(rb, new Vector3(0, 0, FORCE));
+        }
+
     }
 
     public void Down()
@@ -44,12 +63,38 @@ public class Egg : MonoBehaviour
 
     public void Left()
     {
-        FlickEgg(rb, new Vector3(-FORCE, 0, 0));
+  
+        if (inputType == 0)
+        {
+            FlickEgg(rb, new Vector3(-FORCE, 0, 0));
+        }
+        else
+        {
+            RotateEgg(rb, new Vector3(0, 0, FORCE));
+        }
     }
 
     public void Right()
     {
-        FlickEgg(rb, new Vector3(FORCE, 0, 0));
+        if (inputType == 0)
+        {
+            FlickEgg(rb, new Vector3(FORCE, 0, 0));
+        }
+        else
+        {
+            RotateEgg(rb, new Vector3(0, 0, -FORCE));
+        }
+    }
+
+    private void RotateEgg(Rigidbody rb, Vector3 forceDirection)
+    {
+        var currentTime = Time.time;
+        var timeSinceLastFlick = currentTime - timeOfLastFlick;
+        if (timeSinceLastFlick > FlickIntervalInSeconds || timeOfLastFlick == 0.0f)
+         {
+        rb.AddTorque(forceDirection);
+        timeOfLastFlick = currentTime;
+        }
     }
 
     private void FlickEgg(Rigidbody rb, Vector3 forceDirection)
@@ -66,15 +111,35 @@ public class Egg : MonoBehaviour
     void FixedUpdate()
     {
         GetComponent<Rigidbody>().velocity = GetComponent<Rigidbody>().velocity * (1 + (MomentumIncrease/100));
-        //Left
-        if (Input.GetKeyUp(KeyCode.A))
-            Left();
-        //Right
-        if (Input.GetKeyUp(KeyCode.D))
-            Right();
-        //Up
-        if (Input.GetKeyUp(KeyCode.W))
-            Up();
+
+        if (inputType != 2) // Not gyro
+        {
+            // Alt controls --------------------------------------
+            if (swipe.SwipeLeft)
+                Left();
+            if (swipe.SwipeRight)
+                Right();
+            if (swipe.SwipeUp)
+                Up();
+
+
+
+            // --------------------------------------------------------
+            //Left
+            if (Input.GetKeyUp(KeyCode.A))
+                Left();
+            //Right
+            if (Input.GetKeyUp(KeyCode.D))
+                Right();
+            //Up
+            if (Input.GetKeyUp(KeyCode.W))
+                Up();
+        } else
+        {
+            Quaternion phoneRotation = gyro.attitude;
+
+
+        }
     }
 
     private void Win()
@@ -115,6 +180,11 @@ public class Egg : MonoBehaviour
             }
             gameObject.SetActive(false);
         }
+    }
+
+    public void changeInputType(Dropdown change)
+    {
+        inputType = change.value;
     }
 
     public void Reset()

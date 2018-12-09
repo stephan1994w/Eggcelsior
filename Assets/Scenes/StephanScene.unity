@@ -1582,8 +1582,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1303928842}
-  offset: {x: -3, y: 3, z: 1}
-  SmoothFactor: 0.5
+  offset: {x: 0, y: 3, z: -3}
+  SmoothFactor: 1
 --- !u!1001 &554922596
 Prefab:
   m_ObjectHideFlags: 0

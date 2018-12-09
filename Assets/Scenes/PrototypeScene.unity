@@ -869,8 +869,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1303928842}
-  offset: {x: 0, y: 0, z: 0}
-  SmoothFactor: 0.5
+  offset: {x: 0, y: 3.5, z: -3.5}
+  SmoothFactor: 1
 --- !u!1 &564834183
 GameObject:
   m_ObjectHideFlags: 0
@@ -1825,6 +1825,7 @@ MonoBehaviour:
   splatPrefab: {fileID: 1206212936011954, guid: 0686659192755ac458402c196bc63686,
     type: 2}
   gameWon: 0
+  accelEnabled: 1
 --- !u!1 &1369844460
 GameObject:
   m_ObjectHideFlags: 0
@@ -2037,7 +2038,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthText: {fileID: 997222369}
   speedText: {fileID: 0}
+  accelText: {fileID: 0}
   resetButton: {fileID: 1222730421}
+  accelButton: {fileID: 0}
   LevelCompletePanel: {fileID: 1369844463}
   restartButton: {fileID: 2051770100}
 --- !u!114 &1606479955

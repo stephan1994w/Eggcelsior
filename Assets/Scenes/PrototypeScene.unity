@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4400855, g: 0.4885916, b: 0.5687814, a: 1}
+  m_IndirectSpecularColor: {r: 0.44008508, g: 0.48859113, b: 0.5687806, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1818,14 +1818,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf4d1bb8a1e5bfd4daf6cfddc00121f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MomentumIncrease: 1
-  FORCE: 100
+  destroyedVersion: {fileID: 1381962845323630, guid: 98a171b8b7877a94fb8b17eb6dee622b,
+    type: 2}
+  destoryGameObjects: 0
   health: 100
+  gameWon: 0
+  accelEnabled: 0
+  MomentumIncrease: 10
+  FORCE: 400
   FlickIntervalInSeconds: 0
   splatPrefab: {fileID: 1206212936011954, guid: 0686659192755ac458402c196bc63686,
     type: 2}
-  gameWon: 0
-  accelEnabled: 1
 --- !u!1 &1369844460
 GameObject:
   m_ObjectHideFlags: 0

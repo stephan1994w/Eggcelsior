@@ -2,26 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Egg : MonoBehaviour
+public class Egg : DestructibleObject
 {
+    // Public Variables
+    public int health = 100;
+    public bool gameWon = false;
+    public bool accelEnabled = true;
+
+    // Private Variables accessibale through editor
     [SerializeField]
     private float MomentumIncrease = 10;
     [SerializeField]
     private float FORCE = 100f;
-    public int health = 100;
     [SerializeField]
-    float FlickIntervalInSeconds = 5f;
-    Rigidbody rb;
-    float timeOfLastFlick = 0.0f;
+    private float FlickIntervalInSeconds = 5f;
     [SerializeField]
     private GameObject splatPrefab;
-    private bool splat = false;
-    private const float SPLAT_FORCE = 20.0f;
-    private List<GameObject> yokes = new List<GameObject>();
+    // Private Variables
+    private Rigidbody rb;
+    private float timeOfLastFlick = 0.0f;
     private List<Transform> winColliders;
-    public bool gameWon = false;
-    public bool accelEnabled = true;
 
+    // Egg breaking variables
+    private bool splat = false;
+    private const float SPLAT_FORCE = 10;
+    private List<GameObject> yokes = new List<GameObject>();
+    
     public void Init(List<Transform> winColliders)
     {
         this.winColliders = winColliders;
@@ -31,7 +37,6 @@ public class Egg : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-
     }
 
     public void Up(float multiplier)
@@ -113,7 +118,7 @@ public class Egg : MonoBehaviour
                 splatRb.AddForce(50, 50, 50);
                 yokes.Add(splat);
             }
-            gameObject.SetActive(false);
+          DestroyObject();
         }
     }
 
@@ -127,6 +132,7 @@ public class Egg : MonoBehaviour
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
         health = 100;
+       // eggDestructionScript.ResetDestructable(gameObject);
         gameObject.SetActive(true);
     }
 }
